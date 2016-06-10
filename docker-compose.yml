@@ -1,0 +1,7 @@
+version: '2'
+services:
+    server:
+        container_name: server
+        build: ./server
+        expose:
+            - 80
