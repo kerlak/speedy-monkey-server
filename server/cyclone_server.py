@@ -1,3 +1,4 @@
+#! /usr/bin/python
 import cyclone.web
 import sys
 
@@ -36,5 +37,5 @@ if __name__ == "__main__":
     ])
 
     log.startLogging(sys.stdout)
-    reactor.listenTCP(8888, application)
+    reactor.listenTCP(80, application)
     reactor.run()
