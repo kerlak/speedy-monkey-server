@@ -1,11 +1,16 @@
-FROM python:2.7
+FROM python:2.7-alpine
+MAINTAINER Manuel Sierra & Juan Carlos Pazos
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+EXPOSE 80
 
-COPY ./app/requirements.txt /usr/src/app/
-RUN pip install -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN apk --update add python py-pip openssl ca-certificates py-openssl wget
+RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
+  && pip install --upgrade pip \
+  && pip install -r requirements.txt \
+  && apk del build-dependencies
 
-COPY ./app/* /usr/src/app/
-RUN chmod +x /usr/src/app/app.py
-ENTRYPOINT ["/usr/src/app/app.py"]
+ADD cyclone_server.py /root/server.py
+RUN chmod +x /root/server.py
+
+CMD python /root/server.py

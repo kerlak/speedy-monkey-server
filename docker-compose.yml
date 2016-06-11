@@ -1,7 +1,11 @@
 version: '2'
 services:
     server:
-        container_name: server
+        container_name: speedy_server
         build: ./server
-        expose:
-            - 80
+        ports:
+            - "80:80"
+        depends_on:
+            - db
+        links:
+            - db:reto3db
